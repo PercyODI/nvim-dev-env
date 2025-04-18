@@ -259,6 +259,7 @@ return {
     },
     {
         "williamboman/mason-lspconfig.nvim",
+        dependencies = { 'b0o/schemastore.nvim' },
         config = function()
           require("mason-lspconfig").setup({
             ensure_installed = {
@@ -266,6 +267,7 @@ return {
               "jdtls",
               "pyright",
               "ts_ls",
+              "jsonls",
               "ltex",
             }
           })

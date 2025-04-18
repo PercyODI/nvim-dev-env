@@ -45,7 +45,7 @@ USER devuser
 
 # Create mounted directories
 RUN mkdir -p /home/devuser/.config && \
-    mkdir -p /home/devuser/projects
+    mkdir -p /home/devuser/workspace
 
 # Build Neovim from source
 RUN git clone --depth 1 --branch v0.11.0 https://github.com/neovim/neovim.git /tmp/neovim && \
@@ -69,7 +69,6 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | b
 
 ENV PATH="$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH"
 
-
 # Install SDKMAN
 RUN curl -s "https://get.sdkman.io" | bash && \
     bash -c "source /home/devuser/.sdkman/bin/sdkman-init.sh && \
@@ -83,6 +82,13 @@ ENV JAVA_HOME=${SDKMAN_DIR}/candidates/java/current
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
 RUN echo 'source "$SDKMAN_DIR/bin/sdkman-init.sh"' >> /home/devuser/.bashrc
 
+# Add the entrypoint script to the container
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN sudo chmod +x /usr/local/bin/entrypoint.sh
+
 WORKDIR /home/devuser
+
+# Set the entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 CMD [ "bash" ]
