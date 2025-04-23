@@ -12,6 +12,7 @@ RUN apt update && apt install -y \
   curl \
   gettext \
   git \
+  jq \
   libtool \
   libtool-bin \
   locales \
