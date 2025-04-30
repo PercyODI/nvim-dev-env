@@ -34,12 +34,16 @@ devcontainer up \
     --mount type=bind,source=$(realpath ~/.ssh),target=/tmp/ssh \
     --mount type=bind,source=$(realpath ./config),target=/tmp/config \
     --mount type=bind,source=$(realpath ./install.sh),target=/tmp/install.sh
-    # --mount type=bind,source=$(realpath $REPO_PATH),target=/workspace/$REPO_NAME \
 
+# --- Perform post-installation steps ---
 devcontainer exec \
     --workspace-folder "$REPO_PATH" \
     /bin/bash -c "sudo chmod 777 /tmp/install.sh && /tmp/install.sh"
 
+# --- Exec into the container ---
 devcontainer exec \
     --workspace-folder "$REPO_PATH" \
     /bin/bash
+
+
+echo "Could do post work?"
