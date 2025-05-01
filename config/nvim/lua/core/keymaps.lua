@@ -6,13 +6,6 @@ local opts = { noremap = true, silent = true }
 -- Use jk to escape insert mode
 map("i", "jk", "<Esc>", opts)
 
--- Center cursor when moving up/down or searching
-map("n", "n", "nzzzv", opts)
-map("n", "N", "Nzzzv", opts)
-map("n", "J", "mzJ`z", opts)
-map("n", "<C-d>", "<C-d>zz", opts)
-map("n", "<C-u>", "<C-u>zz", opts)
-
 -- Keep paste buffer when pasting over selection
 map("x", "<leader>p", [["_dP]], opts)
 
@@ -26,22 +19,90 @@ map("n", "<leader>w", ":w<CR>", opts)
 -- Clear search highlights
 map("n", "<leader>nh", ":nohlsearch<CR>", opts)
 
--- Search (Telescope)
-map("n", "<leader>sf", "<cmd>Telescope find_files<CR>", opts)
-map("n", "<leader>sg", "<cmd>Telescope live_grep<CR>", opts)
-map("n", "<leader>sb", "<cmd>Telescope buffers<CR>", opts)
-map("n", "<leader>sr", "<cmd>Telescope oldfiles<CR>", opts)
-map("n", "<leader>sp", "<cmd>Telescope projects<CR>", opts)
-map("n", "<leader>se", "<cmd>Telescope file_browser<CR>", opts)
+-- Snacks Pickers and UI
+map("n", "<leader><space>", function() Snacks.picker.smart() end, opts, "Smart Find Files")
+map("n", "<leader>,", function() Snacks.picker.buffers() end, opts, "Buffers")
+map("n", "<leader>/", function() Snacks.picker.grep() end, opts, "Grep")
+map("n", "<leader>:", function() Snacks.picker.command_history() end, opts, "Command History")
+map("n", "<leader>n", function() Snacks.picker.notifications() end, opts, "Notification History")
+map("n", "<leader>e", function() Snacks.explorer() end, opts, "File Explorer")
 
--- Neo Tree
-map('n', '<leader>er', ':Neotree reveal<CR>', opts)
-map('n', '<leader>ec', ':Neotree close<CR>', opts)
+-- Snacks Find
+map("n", "<leader>fb", function() Snacks.picker.buffers() end, opts, "Buffers")
+map("n", "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, opts, "Find Config File")
+map("n", "<leader>ff", function() Snacks.picker.files() end, opts, "Find Files")
+map("n", "<leader>fg", function() Snacks.picker.git_files() end, opts, "Find Git Files")
+map("n", "<leader>fp", function() Snacks.picker.projects() end, opts, "Projects")
+map("n", "<leader>fr", function() Snacks.picker.recent() end, opts, "Recent")
+
+-- Git
+map("n", "<leader>gb", function() Snacks.picker.git_branches() end, opts, "Git Branches")
+map("n", "<leader>gl", function() Snacks.picker.git_log() end, opts, "Git Log")
+map("n", "<leader>gL", function() Snacks.picker.git_log_line() end, opts, "Git Log Line")
+map("n", "<leader>gs", function() Snacks.picker.git_status() end, opts, "Git Status")
+map("n", "<leader>gS", function() Snacks.picker.git_stash() end, opts, "Git Stash")
+map("n", "<leader>gd", function() Snacks.picker.git_diff() end, opts, "Git Diff (Hunks)")
+map("n", "<leader>gf", function() Snacks.picker.git_log_file() end, opts, "Git Log File")
+
+-- Grep/Search
+map("n", "<leader>sb", function() Snacks.picker.lines() end, opts, "Buffer Lines")
+map("n", "<leader>sB", function() Snacks.picker.grep_buffers() end, opts, "Grep Open Buffers")
+map("n", "<leader>sg", function() Snacks.picker.grep() end, opts, "Grep")
+map({ "n", "x" }, "<leader>sw", function() Snacks.picker.grep_word() end, opts, "Grep Word")
+
+map("n", '<leader>s"', function() Snacks.picker.registers() end, opts, "Registers")
+map("n", '<leader>s/', function() Snacks.picker.search_history() end, opts, "Search History")
+map("n", "<leader>sa", function() Snacks.picker.autocmds() end, opts, "Autocmds")
+map("n", "<leader>sc", function() Snacks.picker.command_history() end, opts, "Command History")
+map("n", "<leader>sC", function() Snacks.picker.commands() end, opts, "Commands")
+map("n", "<leader>sd", function() Snacks.picker.diagnostics() end, opts, "Diagnostics")
+map("n", "<leader>sD", function() Snacks.picker.diagnostics_buffer() end, opts, "Buffer Diagnostics")
+map("n", "<leader>sh", function() Snacks.picker.help() end, opts, "Help Pages")
+map("n", "<leader>sH", function() Snacks.picker.highlights() end, opts, "Highlights")
+map("n", "<leader>si", function() Snacks.picker.icons() end, opts, "Icons")
+map("n", "<leader>sj", function() Snacks.picker.jumps() end, opts, "Jumps")
+map("n", "<leader>sk", function() Snacks.picker.keymaps() end, opts, "Keymaps")
+map("n", "<leader>sl", function() Snacks.picker.loclist() end, opts, "Location List")
+map("n", "<leader>sm", function() Snacks.picker.marks() end, opts, "Marks")
+map("n", "<leader>sM", function() Snacks.picker.man() end, opts, "Man Pages")
+map("n", "<leader>sp", function() Snacks.picker.lazy() end, opts, "Search for Plugin Spec")
+map("n", "<leader>sq", function() Snacks.picker.qflist() end, opts, "Quickfix List")
+map("n", "<leader>sR", function() Snacks.picker.resume() end, opts, "Resume")
+map("n", "<leader>su", function() Snacks.picker.undo() end, opts, "Undo History")
+map("n", "<leader>uC", function() Snacks.picker.colorschemes() end, opts, "Colorschemes")
+
+-- LSP
+map("n", "gd", function() Snacks.picker.lsp_definitions() end, opts, "Goto Definition")
+map("n", "gD", function() Snacks.picker.lsp_declarations() end, opts, "Goto Declaration")
+map("n", "gr", function() Snacks.picker.lsp_references() end, opts, "References")
+map("n", "gI", function() Snacks.picker.lsp_implementations() end, opts, "Goto Implementation")
+map("n", "gy", function() Snacks.picker.lsp_type_definitions() end, opts, "Goto Type Definition")
+map("n", "<leader>ss", function() Snacks.picker.lsp_symbols() end, opts, "LSP Symbols")
+map("n", "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, opts, "LSP Workspace Symbols")
+
+-- Misc
+map("n", "<leader>z", function() Snacks.zen() end, opts, "Toggle Zen Mode")
+map("n", "<leader>Z", function() Snacks.zen.zoom() end, opts, "Toggle Zoom")
+map("n", "<leader>.", function() Snacks.scratch() end, opts, "Toggle Scratch Buffer")
+map("n", "<leader>S", function() Snacks.scratch.select() end, opts, "Select Scratch Buffer")
+map("n", "<leader>bd", function() Snacks.bufdelete() end, opts, "Delete Buffer")
+map("n", "<leader>cR", function() Snacks.rename.rename_file() end, opts, "Rename File")
+map("n", "<leader>gB", function() Snacks.gitbrowse() end, opts, "Git Browse")
+map("n", "<leader>gg", function() Snacks.lazygit() end, opts, "Lazygit")
+map("n", "<leader>un", function() Snacks.notifier.hide() end, opts, "Dismiss Notifications")
 
 -- Terminal
-map('n', '<leader>tt', '<cmd>ToggleTerm direction=horizontal<CR>', opts)
-map('n', '<leader>tf', '<cmd>ToggleTerm direction=float<CR>', opts)
-map('t', 'jk', [[<C-\><C-n>]], opts)
+map("n", "<C-/>", function() Snacks.terminal() end, opts, "Toggle Terminal")
+map("n", "<C-_>", function() Snacks.terminal() end, opts, "which_key_ignore")
+
+-- LSP References Jumping
+map({ "n", "t" }, "]]", function() Snacks.words.jump(vim.v.count1) end, opts, "Next Reference")
+map({ "n", "t" }, "[[", function() Snacks.words.jump(-vim.v.count1) end, opts, "Previous Reference")
+
+-- Jump List Navigation
+map("n", "<leader>]]", "<C-i>", opts, "Jump to Next Location")
+map("n", "<leader>[[", "<C-o>", opts, "Jump to Previous Location")
+
 
 vim.api.nvim_create_autocmd("User", {
   pattern = "VeryLazy",
@@ -50,12 +111,12 @@ vim.api.nvim_create_autocmd("User", {
     local hop = require('hop')
     local directions = require('hop.hint').HintDirection
 
-    map('', '<leader>fw', function() hop.hint_words() end, opts)
-    map('', '<leader>fc', function() hop.hint_char1() end, opts)
-    map('', '<leader>f2', function() hop.hint_char2() end, opts)
-    map('', '<leader>fa', function() hop.hint_patterns() end, opts)
-    map('', '<leader>ff', function() hop.hint_char1({direction = directions.AFTER_CURSOR}) end, opts)
-    map('', '<leader>fF', function() hop.hint_char1({direction = directions.BEFORE_CURSOR}) end, opts)
+    map('', '<leader>hw', function() hop.hint_words() end, opts)
+    map('', '<leader>hc', function() hop.hint_char1() end, opts)
+    map('', '<leader>h2', function() hop.hint_char2() end, opts)
+    map('', '<leader>ha', function() hop.hint_patterns() end, opts)
+    map('', '<leader>hf', function() hop.hint_char1({direction = directions.AFTER_CURSOR}) end, opts)
+    map('', '<leader>hF', function() hop.hint_char1({direction = directions.BEFORE_CURSOR}) end, opts)
   end
 })
 
