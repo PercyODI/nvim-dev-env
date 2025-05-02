@@ -90,6 +90,7 @@ devcontainer up \
     --mount type=bind,source=$(realpath ~/.ssh),target=/tmp/ssh \
     --mount type=bind,source=$(realpath ./config),target=/tmp/config \
     --mount type=bind,source=$(realpath ./install.sh),target=/tmp/install.sh \
+    --mount type=bind,source=$(realpath ~/.gitconfig),target=/tmp/gitconfig \
     $DEVCONTAINER_OPTIONS
 
 # --- Perform post-installation steps ---

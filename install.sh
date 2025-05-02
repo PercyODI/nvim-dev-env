@@ -23,6 +23,21 @@ else
     echo "No config files found to set up."
 fi
 
+# Copy git config files from the temporary mount to the user's ~/.gitconfig
+if [ -e /tmp/gitconfig ]; then
+  cp -r /tmp/gitconfig ~/.gitconfig
+  chmod 700 ~/.gitconfig
+  echo ".gitconfig file has been set up."
+else
+  echo "No .gitconfig file found."
+fi
+
+if ! [ -e ~/.config/lazygit/config.yml ]; then
+  mkdir -p ~/.config/lazygit
+  touch ~/.config/lazygit/config.yml
+  echo "Creating lazygit config.yml"
+fi
+
 # Install dependencies
 sudo apt update --fix-missing 
 sudo apt install --fix-missing -y \
