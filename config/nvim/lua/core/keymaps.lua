@@ -1,6 +1,5 @@
--- lua/core/keymaps.lua
-
-local map = vim.keymap.set
+-- local map = vim.keymap.set
+local map = require("me.util").map
 local opts = { noremap = true, silent = true }
 
 -- Use jk to escape insert mode
@@ -92,8 +91,18 @@ map("n", "<leader>gg", function() Snacks.lazygit() end, opts, "Lazygit")
 map("n", "<leader>un", function() Snacks.notifier.hide() end, opts, "Dismiss Notifications")
 
 -- Terminal
-map("n", "<C-/>", function() Snacks.terminal() end, opts, "Toggle Terminal")
+map("t", "JK", [[<C-\><C-n>]], nil, "Exit terminal mode")
+map("n", "<leader>tt", function() Snacks.terminal() end, opts, "Toggle Terminal")
 map("n", "<C-_>", function() Snacks.terminal() end, opts, "which_key_ignore")
+
+  -- Close terminal (must be in normal mode)
+map("n", "<leader>tx", ":bd!<CR>", opts, "Close Terminal Buffer")
+
+  -- Navigate splits (while in terminal, use jk to escape first)
+map("n", "<C-h>", "<C-w>h", opts, "Window Left")
+map("n", "<C-j>", "<C-w>j", opts, "Window Down")
+map("n", "<C-k>", "<C-w>k", opts, "Window Up")
+map("n", "<C-l>", "<C-w>l", opts, "Window Right")
 
 -- LSP References Jumping
 map({ "n", "t" }, "]]", function() Snacks.words.jump(vim.v.count1) end, opts, "Next Reference")
