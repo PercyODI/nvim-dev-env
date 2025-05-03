@@ -91,6 +91,7 @@ devcontainer up \
     --mount type=bind,source=$(realpath ./config),target=/tmp/config \
     --mount type=bind,source=$(realpath ./install.sh),target=/tmp/install.sh \
     --mount type=bind,source=$(realpath ~/.gitconfig),target=/tmp/gitconfig \
+    --mount type=bind,source=$(realpath ~/.aider.conf.yml),target=/tmp/aider.conf.yml \
     $DEVCONTAINER_OPTIONS
 
 # --- Perform post-installation steps ---

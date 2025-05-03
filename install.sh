@@ -38,6 +38,20 @@ if ! [ -e ~/.config/lazygit/config.yml ]; then
   echo "Creating lazygit config.yml"
 fi
 
+# Copy aider config files from the temporary mount to the user's ~/.aider.conf.yml
+if [ -e /tmp/aider.conf.yml ]; then
+  cp -r /tmp/aider.conf.yml ~/.aider.conf.yml
+  chmod 700 ~/.aider.conf.yml
+  echo ".aider.conf.yml file has been set up."
+else
+  echo "No .aider.conf.yml file found."
+fi
+
+if ! [ -e ~/.config/lazygit/config.yml ]; then
+  mkdir -p ~/.config/lazygit
+  touch ~/.config/lazygit/config.yml
+  echo "Creating lazygit config.yml"
+fi
 # Install dependencies
 sudo apt update --fix-missing 
 sudo apt install --fix-missing -y \
@@ -110,6 +124,7 @@ else
 fi
 
 # Install npm only if not already installed
+# This is required for Mason LSP packages
 if ! command -v npm &> /dev/null; then
     # Download and install nvm:
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
@@ -127,3 +142,6 @@ if ! command -v npm &> /dev/null; then
     # Verify npm version:
     npm -v # Should print "10.9.2".
 fi
+
+# Install aider
+curl -LsSf https://aider.chat/install.sh | sh
