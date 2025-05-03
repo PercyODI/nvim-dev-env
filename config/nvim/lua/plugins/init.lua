@@ -54,7 +54,11 @@ return { -- Theming and colors
         },
         words = {
             enabled = true
-        }
+        },
+        terminal = {
+            enabled = true,
+            shell = "/bin/bash"
+      }
     }
 },{
     "folke/which-key.nvim",

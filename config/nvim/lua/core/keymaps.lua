@@ -24,7 +24,10 @@ map("n", "<leader>,", function() Snacks.picker.buffers() end, opts, "Buffers")
 map("n", "<leader>/", function() Snacks.picker.grep() end, opts, "Grep")
 map("n", "<leader>:", function() Snacks.picker.command_history() end, opts, "Command History")
 map("n", "<leader>n", function() Snacks.picker.notifications() end, opts, "Notification History")
-map("n", "<leader>e", function() Snacks.explorer() end, opts, "File Explorer")
+map("n", "<leader>e", function() Snacks.explorer({
+  auto_close = true
+
+}) end, opts, "File Explorer")
 
 -- Snacks Find
 map("n", "<leader>fb", function() Snacks.picker.buffers() end, opts, "Buffers")
@@ -87,12 +90,19 @@ map("n", "<leader>S", function() Snacks.scratch.select() end, opts, "Select Scra
 map("n", "<leader>bd", function() Snacks.bufdelete() end, opts, "Delete Buffer")
 map("n", "<leader>cR", function() Snacks.rename.rename_file() end, opts, "Rename File")
 map("n", "<leader>gB", function() Snacks.gitbrowse() end, opts, "Git Browse")
-map("n", "<leader>gg", function() Snacks.lazygit() end, opts, "Lazygit")
 map("n", "<leader>un", function() Snacks.notifier.hide() end, opts, "Dismiss Notifications")
 
+map("n", "<leader>gg", function() Snacks.lazygit() end, opts, "Lazygit")
+map("n", "<leader>ta", function() Snacks.terminal("aider", {
+  win = {
+    style = "terminal",
+    position = "bottom"
+  }
+}) end, opts, "aider")
 -- Terminal
 map("t", "JK", [[<C-\><C-n>]], nil, "Exit terminal mode")
 map("n", "<leader>tt", function() Snacks.terminal() end, opts, "Toggle Terminal")
+map("n", "<leader>tl", function() Snacks.terminal.list() end, opts, "List Terminals")
 map("n", "<C-_>", function() Snacks.terminal() end, opts, "which_key_ignore")
 
   -- Close terminal (must be in normal mode)
