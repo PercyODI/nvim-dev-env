@@ -99,6 +99,7 @@ map("n", "<leader>ta", function() Snacks.terminal("aider", {
     position = "bottom"
   }
 }) end, opts, "aider")
+
 -- Terminal
 map("t", "JK", [[<C-\><C-n>]], nil, "Exit terminal mode")
 map("n", "<leader>tt", function() Snacks.terminal() end, opts, "Toggle Terminal")
