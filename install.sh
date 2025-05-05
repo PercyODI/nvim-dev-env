@@ -65,9 +65,7 @@ sudo apt install --fix-missing -y \
   luarocks \
   ripgrep \
   unzip \
-  wget \
-  xclip \
-  xsel
+  wget
 
 # Get machine architecture
 ARCH=$(uname -m)
@@ -147,7 +145,12 @@ if ! command -v npm &>/dev/null; then
 fi
 
 # Install aider
-curl -LsSf https://aider.chat/install.sh | sh
+if ! command -v aider &>/dev/null; then
+  echo "Installing aider..."
+  curl -LsSf https://aider.chat/install.sh | sh
+else
+  echo "aider is already installed, skipping installation."
+fi
 
 # Install fd (fd-find)
 if ! command -v fd &>/dev/null; then
@@ -175,3 +178,7 @@ if ! command -v fd &>/dev/null; then
 else
   echo "fd is already installed, skipping installation."
 fi
+
+# Initialize Lazy
+echo "Initializing Lazy"
+nvim --headless "+Lazy! sync" +qa
